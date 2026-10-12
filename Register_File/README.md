@@ -8,12 +8,24 @@ The register file contains **32 registers, each 32 bits wide**.
 
 ```SystemVerilog
 module regfile(
-    input  logic        clk,   // clock
-    input  logic        we3,   // write enable for port 3
-    input  logic [4:0]  a1, a2, a3, // read addresses (a1,a2), write address (a3)
-    input  logic [31:0] wd3,       // write data for port 3
-    output logic [31:0] rd1, rd2   // read data outputs
+    input  logic        clk,
+    input  logic        we3,
+    input  logic [4:0]  a1, a2, a3,
+    input  logic [31:0] wd3,
+    output logic [31:0] rd1, rd2
 );
+    logic [31:0] registers [31:0];
+
+    // Write on the rising clock edge when enabled.
+    always_ff @(posedge clk) begin
+        if (we3)
+            registers[a3] <= wd3;
+    end
+
+    // Asynchronous reads.
+    assign rd1 = registers[a1];
+    assign rd2 = registers[a2];
+endmodule
 ```
 
 ### Working
