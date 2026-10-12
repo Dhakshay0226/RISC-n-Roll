@@ -6,9 +6,17 @@ Implement the Instruction Memory for the single-cycle RISC-V processor.
 
 ```SystemVerilog
 module imem(
-    input  logic [31:0] a,   // Address
-    output logic [31:0] rd   // Instruction
+    input  logic [31:0] a,
+    output logic [31:0] rd
 );
+    logic [31:0] rom [0:63];
+
+    assign rd = rom[a[7:2]];
+
+    initial begin
+        $readmemh("program.hex", rom);
+    end
+endmodule
 ```
 
 ### Guidelines
