@@ -6,10 +6,12 @@ Design a 32-bit adder.
 
 ```SystemVerilog
 module adder(
-    input  logic [31:0] a,  // Operand A
-    input  logic [31:0] b,  // Operand B
-    output logic [31:0] y   // Sum output
+    input  logic [31:0] a,
+    input  logic [31:0] b,
+    output logic [31:0] y
 );
+    assign y = a + b;
+endmodule
 ```
 
 > [!NOTE]
