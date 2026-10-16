@@ -8,10 +8,21 @@ Implement the Data Memory for the single-cycle RISC-V processor.
 module dmem(
     input  logic        clk,
     input  logic        we,
-    input  logic [31:0] a,   // Address
-    input  logic [31:0] wd,  // Write data
-    output logic [31:0] rd   // Read data
+    input  logic [31:0] a,
+    input  logic [31:0] wd,
+    output logic [31:0] rd
 );
+    logic [31:0] ram [0:63];
+
+    // Write one word when clock rises and write enable is on.
+    always_ff @(posedge clk) begin
+        if (we)
+            ram[a[7:2]] <= wd;
+    end
+
+    // Read selected word immediately.
+    assign rd = ram[a[7:2]];
+endmodule
 ```
 
 ### Guidelines
